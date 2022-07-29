@@ -19,7 +19,13 @@ typedef int SInt32;
 typedef bool Boolean;
 //#endif
 
-#define stricmp strcasecmp
-#define strnicmp strncasecmp
+#ifdef _MSC_VER
+	#define stricmp _stricmp
+	#define strnicmp _strnicmp
+#else
+	#define stricmp strcasecmp
+	#define strnicmp strncasecmp
+#endif
+
 
 #endif
