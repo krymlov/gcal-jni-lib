@@ -33,3 +33,4 @@
 /cmake-build-debug
 /.vs
 /out
+/cmake-build-release

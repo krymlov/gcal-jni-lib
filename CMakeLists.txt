@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.17)
 project(gcal-11i)
 
 set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static -Wall")
+set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -ffunction-sections -fdata-sections -Wl,--gc-sections")
 
 if(NOT DEFINED ENV{JAVA_HOME})
     message(FATAL_ERROR "System Variable is not defined: JAVA_HOME")
