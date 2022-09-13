@@ -12,7 +12,6 @@
 *.pch
 
 # Compiled Dynamic libraries
-*.so
 *.dylib
 
 # Fortran module files
@@ -34,3 +33,4 @@
 /.vs
 /out
 /cmake-build-release
+/obj
