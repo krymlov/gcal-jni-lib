@@ -31,15 +31,15 @@ afterEvaluate {
     publishing {
         publications {
             release(MavenPublication) {
-                from components.release
                 groupId 'org.gaurabda'
                 artifactId 'gaurabda-android'
                 version android.defaultConfig.versionName
+                artifact(bundleReleaseAar)
             }
         }
         repositories {
             maven {
-                url "$System.env.M2_REPO"
+                url = mavenLocal().url
             }
         }
     }
