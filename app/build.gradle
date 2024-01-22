@@ -9,7 +9,7 @@ android {
         minSdk 19
         targetSdk 33
         versionCode 11
-        versionName "gcal11j"
+        versionName "gcal.11j"
     }
 
     buildTypes {
