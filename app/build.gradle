@@ -3,7 +3,7 @@ apply plugin: 'maven-publish'
 
 android {
     namespace 'org.gaurabda'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         minSdk 19
