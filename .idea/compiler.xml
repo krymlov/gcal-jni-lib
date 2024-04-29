@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel target="17">
+      <module name="gcal11-android-lib.app" target="11" />
+      <module name="gcal11-android.app" target="17" />
+      <module name="swe-android-lib.app" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
