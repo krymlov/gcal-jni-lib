@@ -9,7 +9,7 @@ android {
         minSdk 24
         targetSdk 34
         versionCode 11
-        versionName "gcal.11j"
+        versionName "11j"
     }
 
     buildTypes {
@@ -32,7 +32,7 @@ afterEvaluate {
         publications {
             release(MavenPublication) {
                 groupId 'org.gaurabda'
-                artifactId 'gaurabda-android'
+                artifactId 'gcal-android'
                 version android.defaultConfig.versionName
                 artifact(bundleReleaseAar)
             }
