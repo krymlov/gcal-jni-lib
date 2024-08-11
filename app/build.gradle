@@ -25,6 +25,7 @@ android {
 }
 
 dependencies {
+    implementation(platform('org.jetbrains.kotlin:kotlin-bom:2.0.10'))
 }
 
 afterEvaluate {
