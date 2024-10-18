@@ -225,21 +225,21 @@ public:
 
 	void Mid(UInt32 a, UInt32 b, TString &dest)
 	{
-		if (a > b)
+/*		if (a > b)
 		{
 			b = a + 1;
-		}
+		}*/
 		if (a > m_nLength)
 		{
 			a = m_nLength;
 		}
-		if (b > m_nLength)
+		if (a + b > m_nLength)
 		{
-			b = m_nLength;
+			b = m_nLength - a;
 		}
 		if (m_pData)
 		{
-			dest.SetStr(m_pData + a, b - a);
+			dest.SetStr(m_pData + a, b);
 		}
 	}
 	void Left(UInt32 n, TString &dest)
@@ -316,40 +316,33 @@ public:
 			return -1;
 		return (m_nLength - strlen(p));
 	}
-	int FindNoCase(const char *substr, UInt32 nFrom = 0)
+	int FindRev(char c)
 	{
 		if (m_pData == NULL)
 			return -1;
-		if (nFrom >= m_nLength)
+		if (m_nLength < 1)
 			return -1;
-		unsigned int i, inLen = strlen(substr);
-		unsigned int pos = 0;
-		for(i = 0; i < m_nLength - inLen; i++)
+		for(int i = m_nLength - 1; i >= 0; i--)
 		{
-			if (toupp(int(m_pData[i])) == toupp(int(substr[pos])))
-			{
-				pos++;
-				if (pos >= inLen)
-					return (i - inLen);
-			}
-			else
-			{
-				pos = 0;
-			}
+			if (m_pData[i] == c)
+				return i;
 		}
 		return -1;
 	}
 	void Delete(UInt32 nFrom, UInt32 nCount = 1)
 	{
-		if (m_pData==NULL || nFrom<0 || nFrom>=m_nLength)
-			return;
+		if (0 == nCount || m_pData==NULL || nFrom<0 || nFrom>=m_nLength) return;
+		
 		int ac = nCount;
 		if (nFrom + ac > m_nLength)
-		{
+        {
 			ac = m_nLength - nFrom;
 		}
-		strcpy(m_pData + nFrom, m_pData + nFrom + ac);
-//		m_pData[nFrom + ac] = 0;
+
+        //GCAL_DLOG("TString.Delete: nFrom=%d, nCount=%d, ac=%d, strlen=%d", nFrom, nCount, ac, m_nLength);
+        memmove(m_pData + nFrom, m_pData + nFrom + ac, 1 + m_nLength - (nFrom + ac));
+        //strcpy(m_pData + nFrom, m_pData + nFrom + ac);
+		//m_pData[nFrom + ac] = 0;
 		m_nLength = strlen(m_pData);
 	}
 	void TrimRight()

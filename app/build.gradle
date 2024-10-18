@@ -6,10 +6,10 @@ android {
     compileSdk 35
 
     defaultConfig {
-        minSdk 24
+        minSdk 26
         targetSdk 35
         versionCode 13
-        versionName "11j"
+        versionName "11j3"
     }
 
     buildTypes {

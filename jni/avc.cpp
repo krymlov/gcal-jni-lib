@@ -744,39 +744,80 @@ int AvcGetNextLine(TString &str, TString &strLine, int & i)
 
 Boolean ConditionEvaluate(VAISNAVADAY * pd, int nClass, int nValue, TString &strText, Boolean defaultRet)
 {
-	static char * pcstr[] = {"", "", "", "", "", "", "", "", "", "", 
+	static const char * pcstr[] = {"", "", "", "", "", "", "", "", "", "",
 		"[c0]", "[c1]", "[c2]", "[c3]", "[c4]", "[c5]", "", ""};
 
 	switch(nClass)
 	{
 	// mahadvadasis
-	case 1: if (nValue == EV_NULL)
+	case 1:
+		if (nValue == EV_NULL)
 			return ((pd->nMhdType != EV_NULL) && (pd->nMhdType != EV_SUDDHA));
 		else
 			return (pd->nMhdType == nValue);
 	// sankrantis
-	case 2: if (nValue == 0xff)
+	case 2:
+		if (nValue == 0xff)
 			return (pd->sankranti_zodiac >= 0);
 		else
 			return (pd->sankranti_zodiac == nValue);
 	// tithi + paksa
-	case 3: return (pd->astrodata.nTithi == nValue);
+	case 3:
+		return (pd->astrodata.nTithi == nValue);
 	// naksatras
-	case 4: return (pd->astrodata.nNaksatra == nValue);
+	case 4:
+		return (pd->astrodata.nNaksatra == nValue);
 	// yogas
-	case 5: return (pd->astrodata.nYoga == nValue);
+	case 5:
+		return (pd->astrodata.nYoga == nValue);
 	// fast days
-	case 6: if (nValue == 0)
+	case 6:
+		if (nValue == 0)
 			return (pd->nFastType != FAST_NULL);
 		else
 			return (pd->nFastType == (0x200 + nValue));
+	
 	// week day
-	case 7: return (pd->date.dayOfWeek == nValue);
+	case 7:
+		return (pd->date.dayOfWeek == nValue);
 	// tithi
-	case 8: return (pd->astrodata.nTithi % 15 == nValue);
+	case 8:
+		return (pd->astrodata.nTithi % 15 == nValue);
 	// paksa
-	case 9: return (pd->astrodata.nPaksa == nValue);
-	case 10: return (pd->festivals.FindNoCase(strText.c_str()) >= 0);
+	case 9:
+		return (pd->astrodata.nPaksa == nValue);
+	case 10:
+	case 11:
+	case 12:
+	case 13:
+	case 14:
+		if (nValue == 0xffff)
+		{
+			return (pd->festivals.Find(pcstr[nClass]) >= 0);
+		}
+		else
+		{
+			if (pd->astrodata.nMasa == 12)
+				return false;
+			if (abs(pd->astrodata.nTithi + pd->astrodata.nMasa*30 - nValue + 200) > 2)
+				return false;
+			if (pd->festivals.Find(strText) >= 0)
+				return true;
+		}
+		return false;
+	case 15:
+		if (nValue == 0xffff)
+		{
+			return (strText.Find(pcstr[15]) >= 0);
+		}
+		else
+		{
+			// difference against 10-14 is that we cannot test tithi-masa date
+			// because some festivals in this category depends on sankranti
+			if (pd->festivals.Find(strText) >= 0)
+				return true;
+		}
+		return false;
 	default:
 		return defaultRet;
 	}
@@ -986,13 +1027,31 @@ int CalcEndDate(EARTHDATA m_earth, VCTIME vcStart, VATIME vaStart, VCTIME &vcEnd
 	case 6:
 		vaEnd = vaStart;
 		if (nCount > 1080) nCount = 1080;
-		vaEnd.masa += nCount;
-		while(vaEnd.masa >= 12)
+		vaEnd.masa = AvcMasaToComboMasa(vaEnd.masa);
+		if (vaEnd.masa == ADHIKA_MASA)
 		{
-			vaEnd.masa -= 12;
-			vaEnd.gyear++;
+			vcEnd = vcStart;
+			vcEnd.month += nCount;
+			while(vcEnd.month > 12)
+			{
+				vcEnd.year++;
+				vcEnd.month -= 12;
+			}
+			VCTIMEtoVATIME(vcEnd, vaEnd, m_earth);
+			vaEnd.tithi = vaStart.tithi;
+			VATIMEtoVCTIME(vaEnd, vcEnd, m_earth);
 		}
-		VATIMEtoVCTIME(vaEnd, vcEnd, m_earth);
+		else
+		{
+			vaEnd.masa += nCount;
+			while(vaEnd.masa >= 12)
+			{
+				vaEnd.masa -= 12;
+				vaEnd.gyear++;
+			}
+			vaEnd.masa = AvcComboMasaToMasa(vaEnd.masa);
+			VATIMEtoVCTIME(vaEnd, vcEnd, m_earth);
+		}
 		break;
 	case 7:
 		vaEnd = vaStart;
