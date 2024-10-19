@@ -16,4 +16,4 @@ set(JNI_INCLUDE_WIN32 "$ENV{JAVA_HOME}/include/win32")
 include_directories(${JNI_INCLUDE})
 include_directories(${JNI_INCLUDE_WIN32})
 
-add_library(gcal-11i SHARED jni/apc.cpp jni/astro.cpp jni/astro_arr.cpp jni/astro_base.cpp jni/astro_cr.cpp jni/astro_moon.cpp jni/astro_ms.cpp jni/astro_res.cpp jni/astro_sun.cpp jni/astro_w.cpp jni/avc.cpp jni/gcal.cpp jni/gc_fb.cpp jni/gc_gstr.cpp jni/gc_ui.cpp jni/gmath.cpp jni/tfile.cpp jni/tstring.cpp jni/ttimezone.cpp)
+add_library(gcal-11j SHARED jni/apc.cpp jni/astro.cpp jni/astro_arr.cpp jni/astro_base.cpp jni/astro_cr.cpp jni/astro_moon.cpp jni/astro_ms.cpp jni/astro_res.cpp jni/astro_sun.cpp jni/astro_w.cpp jni/avc.cpp jni/gcal.cpp jni/gc_fb.cpp jni/gc_gstr.cpp jni/gc_ui.cpp jni/gmath.cpp jni/tfile.cpp jni/tstring.cpp jni/ttimezone.cpp)
