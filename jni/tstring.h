@@ -348,8 +348,8 @@ public:
 		{
 			ac = m_nLength - nFrom;
 		}
-        memmove(m_pData + nFrom, m_pData + nFrom + ac, 1 + m_nLength - (nFrom + ac));
-        //strcpy(m_pData + nFrom, m_pData + nFrom + ac);
+		memmove(m_pData + nFrom, m_pData + nFrom + ac, 1 + m_nLength - (nFrom + ac));
+		//strcpy(m_pData + nFrom, m_pData + nFrom + ac);
 		m_nLength = strlen(m_pData);
 	}
 	void TrimRight()
