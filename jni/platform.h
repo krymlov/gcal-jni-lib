@@ -2,7 +2,7 @@
 #define _GCAL_PLATFORM_HDR__
 
 //#include <android/log.h>
-//#define GCAL_LOG_TAG "GCAL11j3"
+//#define GCAL_LOG_TAG "GCAL07"
 
 //#define GCAL_ILOG(...) __android_log_print(ANDROID_LOG_INFO, GCAL_LOG_TAG, __VA_ARGS__)
 //#define GCAL_DLOG(...) __android_log_print(ANDROID_LOG_DEBUG, GCAL_LOG_TAG, __VA_ARGS__)

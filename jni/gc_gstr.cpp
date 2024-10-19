@@ -159,7 +159,7 @@ void InitGlobalStrings(void)
 	gstr[127] = "Fourth month of Caturmasya continues";
 
 	gstr[128] = "(Caturmasya is not observed during Purusottama Adhika Masa.)";
-	gstr[129] = "11";
+	gstr[129] = "11j3";
 	gstr[130] = "GCal ";
 	gstr[130] += gstr[129];
 	gstr[131] = "Gaurabda Calendar ";

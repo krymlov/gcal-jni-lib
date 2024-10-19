@@ -18,10 +18,11 @@
 extern int g_BhanuMode;
 int AvcComboMasaToMasa(int);
 
-void GCalApp_InitInstance()
-{
+Boolean GCalApp_InitInstance()
+{	
 	InitGlobalStrings();
 	g_BhanuMode = 0;
+	return true;
 }
 
 int htoi(char s) {
@@ -204,6 +205,7 @@ const char* AnalyzeQueryString(const char *mQueryString, int xmlSize) {
 	//GCAL_DLOG("AnalyzeQueryString %s.", mQueryString);
 
 	GCalApp_InitInstance();
+	//XMLOut = NULL;
 
 	char szQuery[1024];
 	char * args[80][2];
