@@ -340,7 +340,7 @@ void InitGlobalStrings(void)
 	gstr[337] = "";
 	gstr[338] = "";
 	gstr[339] = "[c3]Srimati Sita Thakurani (Sri Advaita's consort) -- Appearance";
-	gstr[340] = "[c1]Lalita sasti";
+	gstr[340] = "";
 	gstr[341] = "";
 	gstr[342] = "[c0]Radhastami: Appearance of Srimati Radharani[f:1:Srimati Radharani]";
 	gstr[343] = "";
