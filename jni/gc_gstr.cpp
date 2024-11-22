@@ -349,7 +349,7 @@ void InitGlobalStrings(void)
 	gstr[346] = "[c0]Sri Vamana Dvadasi: Appearance of Lord Vamanadeva[f:1:Vamanadeva]#[c3]Srila Jiva Gosvami -- Appearance";
 	gstr[347] = "[c2]Srila Bhaktivinoda Thakura -- Appearance[f:1:Bhaktivinoda Thakura]";
 	gstr[348] = "[c1]Ananta Caturdasi Vrata#[c3]Srila Haridasa Thakura -- Disappearance";
-	gstr[349] = "[c1]Sri Visvarupa Mahotsava#[c4]Acceptance of sannyasa by Srila Prabhupada";
+	gstr[349] = "[c1]Sri Visvarupa Mahotsava#[c4]Acceptance of sannyasa by Srila Prabhupada#[c5]Bhadrapada Purnima";
 	gstr[350] = "";
 	gstr[351] = "";
 	gstr[352] = "";
