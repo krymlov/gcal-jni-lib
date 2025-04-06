@@ -206,7 +206,7 @@ Boolean GetSpecFestivalNameEx(TString &str, int i)
 		break;
 	case SPEC_RAMANAVAMI:
 		str = gstr[747];
-		str += "[f:2:Sri Ramacandra]";
+		str += "[f:1:Sri Ramacandra]";
 		break;
 	case SPEC_RATHAYATRA:
 		str = gstr[748];
