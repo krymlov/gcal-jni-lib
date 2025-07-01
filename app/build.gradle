@@ -3,7 +3,7 @@ apply plugin: 'maven-publish'
 
 android {
     namespace 'org.gaurabda'
-    compileSdk 35
+    compileSdk 36
 
     defaultConfig {
         minSdk 21
@@ -25,7 +25,7 @@ android {
 }
 
 dependencies {
-    implementation(platform('org.jetbrains.kotlin:kotlin-bom:2.1.21'))
+    implementation(platform('org.jetbrains.kotlin:kotlin-bom:2.2.0'))
 }
 
 afterEvaluate {
