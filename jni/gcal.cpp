@@ -17,6 +17,7 @@
 
 extern int g_BhanuMode;
 int AvcComboMasaToMasa(int);
+int SetSankrantiType(int);
 
 Boolean GCalApp_InitInstance()
 {	
@@ -205,6 +206,11 @@ const char* AnalyzeQueryString(const char *mQueryString, int xmlSize) {
 	//GCAL_DLOG("AnalyzeQueryString %s.", mQueryString);
 
 	GCalApp_InitInstance();
+	// Which day a sankranti is attributed to. 2 - it moves to the next day when it happens
+	// after local noon - is the built-in default (gSanType in avc.cpp). Reset on every call
+	// so a "san" argument in one query cannot leak into the next: the state is global and the
+	// library is used from a single thread, one query at a time.
+	SetSankrantiType(2);
 	//XMLOut = NULL;
 
 	char szQuery[1024];
@@ -303,6 +309,14 @@ const char* AnalyzeQueryString(const char *mQueryString, int xmlSize) {
 			gp = atoi(args[u][1]);
 		} else if (strcmp(args[u][0], "gt") == 0) {
 			gt = atoi(args[u][1]);
+		} else if (strcmp(args[u][0], "san") == 0) {
+			// which day a sankranti belongs to:
+			//   0 the day it happens on   (what most other programs report)
+			//   1 the previous day if it happens before sunrise
+			//   2 the next day if it happens after local noon   (the built-in default)
+			//   3 the next day if it happens after sunset
+			int san = atoi(args[u][1]);
+			if (san >= 0 && san <= 3) SetSankrantiType(san);
 		} else if (strcmp(args[u][0], "dst") == 0) {
 			unsigned int a[10];
 			int curra = 0;

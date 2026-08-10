@@ -343,11 +343,17 @@ const char* WriteCalendarXml(TResultCalendar &daybuff, FILE * fout)
 
 			if (pvd->sankranti_zodiac >= 0)
 			{
-				//double h1, m1, s1;
-				//m1 = modf(pvd->sankranti_day.shour*24, &h1);
-//				s1 = modf(m1*60, &m1);
-				str.Format("\t\t<sankranti rasi=\"%s\" time=\"%02d:%02d:%02d\" />\n"
-					, GetSankrantiName(pvd->sankranti_zodiac), pvd->sankranti_day.GetHour()
+				// The element sits under the day the sankranti is ATTRIBUTED to, which is not
+				// always the day it happens on: with the default rule (gSanType = 2, see
+				// GetSankrantiType) an event after local noon is carried to the next day. The
+				// time printed here has always been the true moment, so date and time used to
+				// describe different days and a reader combining them was 24 hours out -
+				// Makara 2024 reads "15 Jan ... 23:04:46" when the crossing is on 14 Jan at
+				// 23:04:46 local. The date is now written out explicitly.
+				str.Format("\t\t<sankranti rasi=\"%s\" date=\"%d %s %d\" time=\"%02d:%02d:%02d\" />\n"
+					, GetSankrantiName(pvd->sankranti_zodiac)
+					, pvd->sankranti_day.day, AvcGetMonthAbr(pvd->sankranti_day.month)
+					, pvd->sankranti_day.year, pvd->sankranti_day.GetHour()
 					, pvd->sankranti_day.GetMinute(), pvd->sankranti_day.GetSecond());
 				strcat(XMLOut,str);
 			}
