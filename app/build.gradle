@@ -12,6 +12,8 @@ android {
         targetSdk 36
         versionCode 26
         versionName "11j3"
+
+        consumerProguardFiles "proguard-rules.pro"
     }
 
     buildFeatures {

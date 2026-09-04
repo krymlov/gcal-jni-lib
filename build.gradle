@@ -3,9 +3,6 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '2.4.10' apply false
 }
 
-allprojects {
-    buildDir = "${System.getProperty("java.io.tmpdir")}/apps-aars/${rootProject.name}/${project.name}"
-}
 
 task clean(type: Delete) {
     delete layout.buildDirectory
