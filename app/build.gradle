@@ -4,26 +4,75 @@ plugins {
 }
 
 android {
-    namespace 'org.gaurabda'
-    compileSdk 37
+    namespace project.property('AAR_NAMESPACE')
+    compileSdk project.property('AAR_COMPILE_SDK') as int
 
     defaultConfig {
-        minSdk 21
-        targetSdk 36
-        versionCode 26
-        versionName "11j3"
+        minSdk project.property('AAR_MIN_SDK') as int
+        targetSdk project.property('AAR_TARGET_SDK') as int
+        versionCode project.property('AAR_VERSION_CODE') as int
+        versionName project.property('AAR_VERSION')
+        consumerProguardFiles 'consumer-rules.pro'
+    }
 
-        consumerProguardFiles "proguard-rules.pro"
+    // Optimization: disable debug variant to speed up sync and build
+    androidComponents {
+        beforeVariants(selector().withBuildType("debug")) { variantBuilder ->
+            variantBuilder.enable = false
+        }
+    }
+
+    buildTypes {
+        release {
+            isDefault true
+            debuggable false
+            minifyEnabled false
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
     }
 
     buildFeatures {
+        buildConfig = project.property('AAR_BUILD_CONFIG').toBoolean()
         viewBinding = false
         dataBinding = false
-        renderScript false
-        buildConfig false
-        resValues false
-        shaders false
-        aidl false
+        resValues = false
+        shaders = false
+        aidl = false
+        renderScript = false
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    packaging {
+        resources {
+            excludes += [
+                    "META-INF/LICENSE*",
+                    "META-INF/NOTICE*",
+                    "META-INF/AL2.0",
+                    "META-INF/LGPL2.1",
+                    "META-INF/*.kotlin_module",
+                    "**/kotlin/**"
+            ]
+        }
+    }
+
+    lint {
+        quiet true
+        checkReleaseBuilds false
+        abortOnError false
+        ignoreWarnings true
+        checkTestSources false
+        checkDependencies true
+    }
+
+    testOptions {
+        unitTests.all {
+            enabled = false
+        }
     }
 
     publishing {
@@ -33,69 +82,17 @@ android {
     }
 }
 
-androidComponents {
-    beforeVariants(selector().withBuildType("debug")) { variant ->
-        variant.enable = false
-    }
-}
-
-android {
-    buildTypes {
-        release {
-            isDefault = true
-            debuggable false
-            minifyEnabled false
-            zipAlignEnabled true
-            // Optimization: ignore system-wide ProGuard files if not minifying
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
-    }
-
-    packagingOptions {
-        resources {
-            excludes += [
-                    "META-INF/LICENSE*",
-                    "META-INF/NOTICE*",
-                    "META-INF/AL2.0",
-                    "META-INF/LGPL2.1",
-                    "META-INF/*.kotlin_module"
-            ]
-        }
-    }
-
-    lint {
-        quiet true
-        abortOnError true
-        ignoreWarnings true
-        checkTestSources true
-        checkDependencies true
-        checkReleaseBuilds true
-    }
-
-    testOptions {
-        unitTests.all {
-            enabled = false
-        }
-    }
-}
-
 dependencies {
     // No source code dependencies required
 }
 
-publishing {
-    publications {
-        release(MavenPublication) {
-            groupId 'org.gaurabda'
-            artifactId 'gcal-android'
-            version android.defaultConfig.versionName
-
-            afterEvaluate {
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                artifactId project.property('AAR_ARTIFACT_ID')
+                groupId project.property('AAR_GROUP_ID')
+                version project.property('AAR_VERSION')
                 from components.release
             }
         }
