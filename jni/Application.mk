@@ -12,7 +12,7 @@
 APP_ABI := armeabi-v7a arm64-v8a x86_64 x86
 
 # minSdk. Bumping this is an app-compatibility decision, not a build tuning one.
-APP_PLATFORM := android-21
+APP_PLATFORM := android-24
 
 # release: -DNDEBUG and the per-ABI optimisation preset. Android.mk overrides the -O level for
 # armeabi-v7a; see the comment there for why.
