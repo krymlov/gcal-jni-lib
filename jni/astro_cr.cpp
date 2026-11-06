@@ -98,7 +98,8 @@ Boolean TResultCalendar::NextNewFullIsVriddhi(int nIndex, EARTHDATA earth)
 	int nTithi;
 	int nPrevTithi = 100;
 
-	for(i = 0; i < BEFORE_DAYS; i++)
+	// MahadvadasiCalc asks for days up to m_PureCount + BEFORE_DAYS + 2, so the scan can reach the end
+	for(i = 0; i < BEFORE_DAYS && nIndex < m_nCount; i++)
 	{
 		nTithi = m_pData[nIndex].astrodata.nTithi;
 		if ((nTithi == nPrevTithi) && TITHI_FULLNEW_MOON(nTithi))
